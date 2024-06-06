@@ -1,2 +1,2 @@
-# nfe-txt-to-xml
+# Streamlit
 Aplicação web para converter arquivos NFe do formato txt para xml
