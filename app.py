@@ -1,5 +1,5 @@
 import streamlit as st
-from tkinter import Tk, filedialog
+import streamlit_file_uploader
 import xml.etree.ElementTree as ET
 import os
 
@@ -235,14 +235,25 @@ if 'pasta' not in st.session_state:
 def cache_state():
     return st.session_state
 
+# Adicionar widget de upload de arquivos
+uploaded_files = streamlit_file_uploader.st_file_uploader("Selecionar pasta dos arquivos TXT", type=["txt"], accept_multiple_files=True)
+# Verificar se foram selecionados arquivos TXT
+if uploaded_files:
+    # Definir o caminho da pasta temporária para armazenar os arquivos TXT
+    temp_dir = '/tmp'
+    for file in uploaded_files:
+        file_path = os.path.join(temp_dir, file.name)
+        with open(file_path, 'wb') as f:
+            f.write(file.getbuffer())
 
-if st.button("Selecionar pasta dos arquivos TXT"):
-    pasta = select_folder()
-    if pasta:
-        st.write(f"Pasta selecionada: {pasta}")
-        st.session_state.pasta = pasta  # Armazenar o caminho da pasta selecionada no estado da sessão
-    else:
-        st.write("Nenhuma pasta foi selecionada.")
+    # Atualizar a variável pasta com o caminho da pasta temporária
+    st.session_state.pasta = temp_dir
+
+    # Exibir mensagem de confirmação
+    st.write(f"Pasta selecionada: {temp_dir}")
+
+# Verificar se a variável pasta está definida e não está vazia antes de exibir o botão "Converter"
+if st.session_state.pasta:
 
 # Verificar se a variável pasta está definida e não está vazia antes de exibir o botão "Converter"
 if st.session_state.pasta:
