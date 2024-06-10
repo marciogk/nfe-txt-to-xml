@@ -1,6 +1,7 @@
 import streamlit as st
 import xml.etree.ElementTree as ET
-import os
+import os.path
+import pathlib
 
 
 def create_element(parent, tag, text=None, attrib={}):
@@ -269,17 +270,37 @@ if uploaded_file is not None:
     file_details = {"FileName": uploaded_file.name, "FileType": uploaded_file.type, "FileSize": uploaded_file.size}
     st.write(file_details)
     st.write("Convertendo arquivo...")
+#     bytes_data = uploaded_file.getvalue()
+#     data = bytes_data.decode("utf-8").splitlines()
+#     st.session_state["preview"] = ""
+#     for line in data:
+#         st.session_state["preview"] += line + "\n"
+#     st.write(st.session_state["preview"], unsafe_allow_html=True, key="preview", height=300, width=800)
 
-    bytes_data = uploaded_file.getvalue()
-    data = bytes_data.decode("utf-8").splitlines()
-    st.session_state["preview"] = ""
-    for line in data:
-        st.session_state["preview"] += line + "\n"
-    st.write(st.session_state["preview"], unsafe_allow_html=True, key="preview", height=300, width=800)
+# preview = st.text_area("Preview", st.session_state["preview"], height=300, width=800, key="preview")
+# upload_state = st.text_area("Preview", st.session_state["preview"], height=300, width=800, key="upload_state")
 
-preview = st.text_area("Preview", st.session_state["preview"], height=300, width=800, key="preview")
-upload_state = st.text_area("Preview", st.session_state["preview"], height=300, width=800, key="upload_state")
 
+def upload():
+    if uploaded_file is not None:
+        bytes_data = uploaded_file.getvalue()
+        data = bytes_data.decode("utf-8")
+        
+        parent_path = pathlib.Path(__file__).parent.parent.resolve()
+        save_path = os.path.join(parent_path, "uploads")
+        complete_name = os.path.join(save_path, uploaded_file.name)
+
+        destination_file = open(complete_name, "w")
+        destination_file.write(data)
+        destination_file.close()
+        st.write("Arquivo salvo com sucesso!")
+        st.write("")
+        st.session_state["upload_state"] = "Arquivo salvo com sucesso! Caminho: " + complete_name + "\n"
+
+
+st.button("Upload", on_click=upload)
+        # preview = st.text_area("Preview", st.session_state["preview"], height=300, width=800, key="preview")
+        # upload_state = st.text_area("Preview", st.session_state["preview"], height=300, width=800, key="upload_state")
     # with open(os.path.join(st.session_state.pasta, uploaded_file.name), "wb") as file:
     #     file.write(uploaded_file.getbuffer())
     # process_txt_to_xml(os.path.join(st.session_state.pasta, uploaded_file.name), os.path.join(st.session_state.pasta, uploaded_file.name[:-4] + '.xml'))
