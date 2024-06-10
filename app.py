@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit_file_uploader
 import xml.etree.ElementTree as ET
 import os
 
@@ -214,58 +213,53 @@ def process_txt_to_xml(txt_path, xml_path):
     tree.write(xml_path, encoding='utf-8', xml_declaration=True)
 
 
-def select_folder():
-    # Inicializa o root do tkinter
-    root = Tk()
-    root.withdraw()  # Oculta a janela principal do tkinter
-    folder_selected = filedialog.askdirectory()  # Abre a caixa de diálogo de seleção de pasta
-    root.destroy()  # Destroi a instância do tkinter após a seleção
-    return folder_selected
-
-
-st.title("Conversão de NFe")
-st.markdown("<p style='font-size:24px'>TXT para XML</p>", unsafe_allow_html=True)
+st.title("Conversão de NFe - TXT para XML")
+# st.markdown("<p style='font-size:24px'>TXT para XML</p>", unsafe_allow_html=True)
+st.write("")
+st.write(r"Os arquivos .txt existentes na pasta 'c:\NFe' serão convertidos para .xml:")
 st.write("")
 
 if 'pasta' not in st.session_state:
     st.session_state.pasta = ''
+
 
 # Armazenar em cache o estado da aplicação
 @st.cache_data
 def cache_state():
     return st.session_state
 
-# Adicionar widget de upload de arquivos
-uploaded_files = streamlit_file_uploader.st_file_uploader("Selecionar pasta dos arquivos TXT", type=["txt"], accept_multiple_files=True)
-# Verificar se foram selecionados arquivos TXT
-if uploaded_files:
-    # Definir o caminho da pasta temporária para armazenar os arquivos TXT
-    temp_dir = '/tmp'
-    for file in uploaded_files:
-        file_path = os.path.join(temp_dir, file.name)
-        with open(file_path, 'wb') as f:
-            f.write(file.getbuffer())
 
-    # Atualizar a variável pasta com o caminho da pasta temporária
-    st.session_state.pasta = temp_dir
+# if st.button("Selecionar pasta dos arquivos TXT"):
+#     pasta = select_folder()
+#     if pasta:
+#         st.write(f"Pasta selecionada: {pasta}")
+#         st.session_state.pasta = pasta  # Armazenar o caminho da pasta selecionada no estado da sessão
+#     else:
+#         st.write("Nenhuma pasta foi selecionada.")
 
-    # Exibir mensagem de confirmação
-    st.write(f"Pasta selecionada: {temp_dir}")
+pasta = os.path.normpath('C:\\NFe\\')  # Caminho da pasta de arquivos TXT
+st.session_state.pasta = pasta  # Armazenar o caminho da pasta selecionada no estado da sessão
 
-# Verificar se a variável pasta está definida e não está vazia antes de exibir o botão "Converter"
-if st.session_state.pasta:
 
-# Verificar se a variável pasta está definida e não está vazia antes de exibir o botão "Converter"
-if st.session_state.pasta:
-    if st.button("Converter"):
+if st.button("Converter"):
+    # Verificar se a pasta existe
+    if not os.path.exists(st.session_state.pasta):
+        st.write(f"Pasta não encontrada: {st.session_state.pasta}")
+    else:
+        arquivos_processados = False
         for file in os.listdir(st.session_state.pasta):  # Usar o caminho da pasta selecionada no estado da sessão
-            if file.endswith('.txt') or file.endswith('.TXT'):
+            if file.lower().endswith('.txt'):  # Trata tanto '.txt' quanto '.TXT'
                 st.write(f"Convertendo {file}...")
-                process_txt_to_xml(os.path.join(st.session_state.pasta, file), os.path.join(st.session_state.pasta, file.replace('.txt', '.xml').replace('.TXT', '.xml')))
-        st.write("Arquivo(s) convertido(s) com sucesso!")
-        st.write(st.session_state.pasta)
+                process_txt_to_xml(os.path.join(st.session_state.pasta, file), os.path.join(st.session_state.pasta, file[:-4] + '.xml'))
+                arquivos_processados = True
+        if arquivos_processados:
+            st.write("Arquivo(s) convertido(s) com sucesso!")
+        else:
+            st.write("Nenhum arquivo .txt encontrado para conversão.")
+        # st.write(st.session_state.pasta)
 
-    # Adicionar botão "Reiniciar"
-    if st.button("Reiniciar"):
-        cache_state().clear()  # Limpar o estado da aplicação
-        st.experimental_rerun()  # Reiniciar a aplicação
+        # Adicionar botão "Reiniciar"
+        st.write("")
+        if st.button("Reiniciar"):
+            cache_state().clear()  # Limpar o estado da aplicação
+            st.experimental_rerun()  # Reiniciar a aplicação
