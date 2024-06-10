@@ -263,3 +263,20 @@ if st.button("Converter"):
         if st.button("Reiniciar"):
             cache_state().clear()  # Limpar o estado da aplicação
             st.experimental_rerun()  # Reiniciar a aplicação
+
+uploaded_file = st.file_uploader("Escolha um arquivo TXT", type="txt")
+if uploaded_file is not None:
+    file_details = {"FileName": uploaded_file.name, "FileType": uploaded_file.type, "FileSize": uploaded_file.size}
+    st.write(file_details)
+    st.write("Convertendo arquivo...")
+    with open(os.path.join(st.session_state.pasta, uploaded_file.name), "wb") as file:
+        file.write(uploaded_file.getbuffer())
+    process_txt_to_xml(os.path.join(st.session_state.pasta, uploaded_file.name), os.path.join(st.session_state.pasta, uploaded_file.name[:-4] + '.xml'))
+    st.write("Arquivo convertido com sucesso!")
+    st.write("")
+
+    # Adicionar botão "Reiniciar"
+    st.write("")
+    if st.button("Reiniciar"):
+        cache_state().clear()  # Limpar o estado da aplicação
+        st.experimental_rerun()  # Reiniciar a aplicação
