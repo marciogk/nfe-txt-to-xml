@@ -1,7 +1,17 @@
 import streamlit as st
 from functions import process_txt_to_xml
 
-st.set_page_config(page_title='txt to xml', initial_sidebar_state='collapsed')
+st.set_page_config(page_title='txt to xml')
+
+# Esconder o menu do Streamlit
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 # st.header("This is a header") # adds subheader
 # st.subheader("This is a subheader") # adds a smaller subheader
