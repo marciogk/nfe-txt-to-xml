@@ -10,14 +10,12 @@ def create_element(parent, tag, text=None, attrib={}):
 
 
 def process_txt_to_xml(txt_content):
-    # with open(txt_path, 'r') as file:
-    #     lines = file.readlines()
     lines = txt_content.splitlines()
 
     ET.register_namespace('', "http://www.portalfiscal.inf.br/nfe")
     nfeProc = ET.Element('nfeProc', attrib={'xmlns': "http://www.portalfiscal.inf.br/nfe", 'versao': '4.00'})
     NFe = create_element(nfeProc, 'NFe', attrib={'xmlns': "http://www.portalfiscal.inf.br/nfe"})
-    infNFe = create_element(NFe, 'infNFe', attrib={'versao': '3.10', 'Id': 'NFe510500042420035722343256826829877'})
+    infNFe = create_element(NFe, 'infNFe', attrib={'versao': '4.00'})
 
     det_counter = 1  # Contador para elementos <det>
 
@@ -31,14 +29,15 @@ def process_txt_to_xml(txt_content):
         elif parts[0] == 'B':
             ide = create_element(infNFe, 'ide')
             create_element(ide, 'cUF', parts[1])
-            create_element(ide, 'cNF', parts[2])
+            create_element(ide, 'cNF', '?')
             create_element(ide, 'natOp', parts[3])
-            create_element(ide, 'indPag', '2')
+            # create_element(ide, 'indPag', '?')
             create_element(ide, 'mod', parts[4])
             create_element(ide, 'serie', parts[5])
             create_element(ide, 'nNF', parts[6])
             create_element(ide, 'dhEmi', parts[7])
-            create_element(ide, 'dhSaiEnt', parts[8])
+            if len(parts[8]) > 0:
+                create_element(ide, 'dhSaiEnt', parts[8])
             create_element(ide, 'tpNF', parts[9])
             create_element(ide, 'idDest', parts[10])
             create_element(ide, 'cMunFG', parts[11])
@@ -49,60 +48,81 @@ def process_txt_to_xml(txt_content):
             create_element(ide, 'finNFe', parts[16])
             create_element(ide, 'indFinal', parts[17])
             create_element(ide, 'indPres', parts[18])
-            create_element(ide, 'procEmi', parts[19])
-            create_element(ide, 'verProc', parts[20])
+            create_element(ide, 'procEmi', '3')
+            create_element(ide, 'verProc', '4.01_sebrae_b039')
 
         elif parts[0] == 'C':
-            if len(parts) < 15:
-                print(f"Erro na linha {line_number}: esperados 15 campos, mas encontrados {len(parts)}")
-                continue  # Pular para a próxima linha se não houver campos suficientes
+            parts1 = parts
+            continue
+
+        elif parts[0] == 'C02':
+            parts2 = parts
+            continue
+
+        elif parts[0] == 'C05':
+            parts3 = parts
             emit = create_element(infNFe, 'emit')
-            create_element(emit, 'CNPJ', parts[1])
-            create_element(emit, 'xNome', parts[2])
-            create_element(emit, 'xFant', parts[3])
+            create_element(emit, 'CNPJ', parts2[1])
+            create_element(emit, 'xNome', parts1[1])
+            create_element(emit, 'xFant', parts1[2])
             enderEmit = create_element(emit, 'enderEmit')
-            create_element(enderEmit, 'xLgr', parts[4])
-            create_element(enderEmit, 'nro', parts[5])
-            create_element(enderEmit, 'xBairro', parts[6])
-            create_element(enderEmit, 'cMun', parts[7])
-            create_element(enderEmit, 'xMun', parts[8])
-            create_element(enderEmit, 'UF', parts[9])
-            create_element(enderEmit, 'CEP', parts[10])
-            create_element(enderEmit, 'cPais', parts[11])
-            create_element(enderEmit, 'xPais', parts[12])
-            create_element(emit, 'IE', parts[13])
-            create_element(emit, 'CRT', parts[14])
+            create_element(enderEmit, 'xLgr', parts3[1])
+            create_element(enderEmit, 'nro', parts3[2])
+            if len(parts3[3]) > 0:
+                create_element(enderEmit, 'xCpl', parts3[3])
+            create_element(enderEmit, 'xBairro', parts3[4])
+            create_element(enderEmit, 'cMun', parts3[5])
+            create_element(enderEmit, 'xMun', parts3[6])
+            create_element(enderEmit, 'UF', parts3[7])
+            create_element(enderEmit, 'CEP', parts3[8])
+            create_element(enderEmit, 'cPais', parts3[9])
+            create_element(enderEmit, 'xPais', parts3[10])
+            create_element(enderEmit, 'fone', parts3[11])           
+            create_element(emit, 'IE', parts1[3])
+            create_element(emit, 'CRT', parts1[7])
 
         elif parts[0] == 'E':
-            if len(parts) < 13:
-                print(f"Erro na linha {line_number}: esperados 13 campos, mas encontrados {len(parts)}")
-                continue
+            parts1 = parts
+            continue
+        elif parts[0] == 'E02':
+            parts2 = parts
+            continue
+        elif parts[0] == 'E05':
+            parts3 = parts
             dest = create_element(infNFe, 'dest')
-            create_element(dest, 'idEstrangeiro', parts[1])
-            create_element(dest, 'xNome', parts[2])
+            create_element(dest, 'CNPJ', parts2[1])
+            create_element(dest, 'xNome', parts1[1])
             enderDest = create_element(dest, 'enderDest')
-            create_element(enderDest, 'xLgr', parts[3])
-            create_element(enderDest, 'nro', parts[4])
-            create_element(enderDest, 'xCpl', parts[5])
-            create_element(enderDest, 'xBairro', parts[6])
-            create_element(enderDest, 'cMun', parts[7])
-            create_element(enderDest, 'xMun', parts[8])
-            create_element(enderDest, 'UF', parts[9])
-            create_element(enderDest, 'cPais', parts[10])
-            create_element(enderDest, 'xPais', parts[11])
-            create_element(dest, 'indIEDest', parts[12])
+            create_element(enderDest, 'xLgr', parts3[1])
+            create_element(enderDest, 'nro', parts3[2])
+            if len(parts3[3]) > 0:
+                create_element(enderDest, 'xCpl', parts3[3])
+            create_element(enderDest, 'xBairro', parts3[4])
+            create_element(enderDest, 'cMun', parts3[5])
+            create_element(enderDest, 'xMun', parts3[6])
+            create_element(enderDest, 'UF', parts3[7])
+            create_element(enderDest, 'CEP', parts3[8])
+            create_element(enderDest, 'cPais', parts3[9])
+            create_element(enderDest, 'xPais', parts3[10])
+            if len(parts3[11]) > 0:
+                create_element(enderDest, 'fone', parts3[11])
+            create_element(dest, 'indIEDest', '?')
+            create_element(dest, 'IE', parts1[3])
 
         elif parts[0] == 'H':
             det = create_element(infNFe, 'det', attrib={'nItem': str(det_counter)})
             det_counter += 1
 
         elif parts[0] == 'I':
-            if len(parts) < 15:
-                print(f"Erro na linha {line_number}: esperados 15 campos, mas encontrados {len(parts)}")
-                continue
+            # if len(parts) < 15:
+            #     print(f"Erro na linha {line_number}: esperados 15 campos, mas encontrados {len(parts)}")
+            #     continue
             prod = create_element(det, 'prod')
             create_element(prod, 'cProd', parts[1])
-            create_element(prod, 'cEAN', parts[2])
+            if len(parts[2]) > 0:
+                create_element(prod, 'cEAN', parts[2])
+            else:
+                create_element(prod, 'cEAN', 'SEM GTIN')
             create_element(prod, 'xProd', parts[3])
             create_element(prod, 'NCM', parts[4])
             create_element(prod, 'CFOP', parts[5])
@@ -212,8 +232,6 @@ def process_txt_to_xml(txt_content):
     xml_buffer = BytesIO()
     tree = ET.ElementTree(nfeProc)
     # tree.write(xml_path, encoding='utf-8', xml_declaration=True)
-    
+
     tree.write(xml_buffer, encoding='utf-8', xml_declaration=True)
     return xml_buffer.getvalue().decode('utf-8')
-
-# Path: app4.py
