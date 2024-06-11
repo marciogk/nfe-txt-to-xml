@@ -29,7 +29,7 @@ def process_txt_to_xml(txt_content):
         elif parts[0] == 'B':
             ide = create_element(infNFe, 'ide')
             create_element(ide, 'cUF', parts[1])
-            create_element(ide, 'cNF', '?')
+            create_element(ide, 'cNF', parts[2])
             create_element(ide, 'natOp', parts[3])
             # create_element(ide, 'indPag', '?')
             create_element(ide, 'mod', parts[4])
@@ -43,7 +43,7 @@ def process_txt_to_xml(txt_content):
             create_element(ide, 'cMunFG', parts[11])
             create_element(ide, 'tpImp', parts[12])
             create_element(ide, 'tpEmis', parts[13])
-            create_element(ide, 'cDV', '')
+            create_element(ide, 'cDV', ' ')
             create_element(ide, 'tpAmb', parts[15])
             create_element(ide, 'finNFe', parts[16])
             create_element(ide, 'indFinal', parts[17])
