@@ -1,6 +1,7 @@
 import streamlit as st
 from functions import process_txt_to_xml
 
+st.set_page_config(page_title='Seu Título', layout='wide', initial_sidebar_state='collapsed')
 
 # st.header("This is a header") # adds subheader
 # st.subheader("This is a subheader") # adds a smaller subheader
