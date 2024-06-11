@@ -14,6 +14,13 @@ hide_streamlit_style = """
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
+st.markdown(
+  '''<style>
+    #MainMenu{visibility: hidden;} footer{visibility: hidden;}
+    #root>div:nth-child(1)>div>div>div>div>section>div{padding-top: .2rem;
+  </style>''', unsafe_allow_html=True
+)
+
 # st.header("This is a header") # adds subheader
 # st.subheader("This is a subheader") # adds a smaller subheader
 
