@@ -28,6 +28,19 @@ st.markdown(
 st.title("Conversão de NFe - TXT para XML")
 
 
+# Exibir o número da versão da aplicação no canto superior esquerdo
+st.markdown(
+    """
+    <style>
+    .css-1l02zno {
+        font-size: 0.8em;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 # Número da versão da aplicação, no canto inferior direito
 st.markdown(
     """
@@ -53,7 +66,7 @@ st.markdown(
     **Instruções:**
     1. Selecione um arquivo .txt de NF-e.
     2. Clique no botão "Converter para XML".
-    3. O arquivo .xml será baixado automaticamente.
+    3. Selecione a pasta onde irá salvar o arquivo .xml.
     """
 )
 
@@ -84,8 +97,10 @@ if uploaded_file is not None:
         return processed_content
 
     processed_content = process_content(file_content)
-    processed_file_name = uploaded_file.name.replace(".txt", ".xml")
-    processed_file_name = uploaded_file.name.replace(".TXT", ".xml")
+    if uploaded_file.name.endswith(".txt"):
+        processed_file_name = uploaded_file.name.replace(".txt", ".xml")
+    elif uploaded_file.name.endswith(".TXT"):
+        processed_file_name = uploaded_file.name.replace(".TXT", ".xml")
 
     st.success("Arquivo processado com sucesso! Clique no botão abaixo para converter em .xml")
 

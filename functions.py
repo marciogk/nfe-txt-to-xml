@@ -80,7 +80,7 @@ def process_txt_to_xml(txt_content):
             create_element(enderEmit, 'CEP', parts3[8])
             create_element(enderEmit, 'cPais', parts3[9])
             create_element(enderEmit, 'xPais', parts3[10])
-            create_element(enderEmit, 'fone', parts3[11])           
+            create_element(enderEmit, 'fone', parts3[11])
             create_element(emit, 'IE', parts1[3])
             create_element(emit, 'CRT', parts1[7])
 
@@ -109,7 +109,7 @@ def process_txt_to_xml(txt_content):
             create_element(enderDest, 'xPais', parts3[10])
             if len(parts3[11]) > 0:
                 create_element(enderDest, 'fone', parts3[11])
-            create_element(dest, 'indIEDest', '?')
+            create_element(dest, 'indIEDest', parts1[2])
             create_element(dest, 'IE', parts1[3])
 
         elif parts[0] == 'H':
@@ -268,13 +268,13 @@ def process_txt_to_xml(txt_content):
             detPag = create_element(pag, 'detPag')
             create_element(detPag, 'indPag', parts[1])
             create_element(detPag, 'tPag', parts[2])
-            create_element(detPag, 'vPag', parts[3])
+            create_element(detPag, 'vPag', parts[4])
 
         elif parts[0] == 'Z':
             infAdic = create_element(infNFe, 'infAdic')
             create_element(infAdic, 'infCpl', parts[2])
 
-    infRespTec = create_element(nfeProc, 'infRespTec')
+    infRespTec = create_element(infNFe, 'infRespTec')
     create_element(infRespTec, 'CNPJ', '43728245000142')
     create_element(infRespTec, 'xContato', 'suporte')
     create_element(infRespTec, 'email', 'suporteemissores@sebraesp.com.br')
