@@ -151,7 +151,8 @@ def process_txt_to_xml(txt_content):
             create_element(icmssn500, 'vBCSTRet', parts[3])
             create_element(icmssn500, 'pST', parts[4])
             create_element(icmssn500, 'vICMSSubstituto', parts[5])
-            create_element(icmssn500, 'vICMSSTRet', parts[6])
+            if len(parts[6]) > 0:
+                create_element(icmssn500, 'vICMSSTRet', parts[6])
 
         # elif parts[0] == 'N10':
         #     if len(parts) < 7:
