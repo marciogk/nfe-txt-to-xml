@@ -38,7 +38,7 @@ st.markdown(
         left: 10px;
     }
     </style>
-    <div class="css-10trblm">Meu texto no canto superior esquerdo</div>
+    <div class="css-10trblm">Versão 1.0</div>
     """,
     unsafe_allow_html=True
 )
@@ -67,7 +67,7 @@ st.markdown(
 st.markdown(
     """
     **Instruções:**
-    1. Selecione um arquivo .txt de NF-e clicando no botão <Browse file>.
+    1. Selecione um arquivo .txt de NF-e clicando no botão <Browse files>.
     2. Verifique o conteúdo do arquivo.
     3. Clique no botão "Converter para XML".
     4. Selecione a pasta onde irá salvar o arquivo .xml.
