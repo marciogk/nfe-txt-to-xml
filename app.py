@@ -28,6 +28,35 @@ st.markdown(
 st.title("Conversão de NFe - TXT para XML")
 
 
+# Número da versão da aplicação, no canto inferior direito
+st.markdown(
+    """
+    <style>
+    footer {
+        visibility: hidden;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Descrição da aplicação
+st.markdown(
+    """
+    Esta aplicação converte arquivos .txt de Notas Fiscais Eletrônicas (NF-e) em arquivos .xml.
+    """
+)
+
+# Instruções para o usuário
+st.markdown(
+    """
+    **Instruções:**
+    1. Selecione um arquivo .txt de NF-e.
+    2. Clique no botão "Converter para XML".
+    3. O arquivo .xml será baixado automaticamente.
+    """
+)
+
 # Botão para upload do arquivo .txt
 uploaded_file = st.file_uploader("Selecione o arquivo .TXT", type="txt")
 

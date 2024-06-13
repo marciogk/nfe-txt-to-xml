@@ -126,111 +126,170 @@ def process_txt_to_xml(txt_content):
                 create_element(prod, 'cEAN', parts[2])
             else:
                 create_element(prod, 'cEAN', 'SEM GTIN')
-            create_element(prod, 'xProd', parts[3])
-            create_element(prod, 'NCM', parts[4])
-            create_element(prod, 'CFOP', parts[5])
-            create_element(prod, 'uCom', parts[6])
-            create_element(prod, 'qCom', parts[7])
-            create_element(prod, 'vUnCom', parts[8])
-            create_element(prod, 'vProd', parts[9])
-            create_element(prod, 'cEANTrib', parts[10])
-            create_element(prod, 'uTrib', parts[11])
-            create_element(prod, 'qTrib', parts[12])
-            create_element(prod, 'vUnTrib', parts[13])
-            create_element(prod, 'indTot', parts[14])
+            create_element(prod, 'xProd', parts[4])
+            create_element(prod, 'NCM', parts[5])
+            create_element(prod, 'CFOP', parts[7])
+            create_element(prod, 'uCom', parts[8])
+            create_element(prod, 'qCom', parts[9])
+            create_element(prod, 'vUnCom', parts[10])
+            create_element(prod, 'vProd', parts[11])
+            if len(parts[12]) > 0:
+                create_element(prod, 'cEANTrib', parts[12])
+            else:
+                create_element(prod, 'cEANTrib', 'SEM GTIN')
+            create_element(prod, 'uTrib', parts[14])
+            create_element(prod, 'qTrib', parts[15])
+            create_element(prod, 'vUnTrib', parts[16])
+            create_element(prod, 'indTot', parts[21])
 
-        elif parts[0] == 'N':
+        elif parts[0] == 'N10g':
             imposto = create_element(det, 'imposto')
+            icms = create_element(imposto, 'ICMS')
+            icmssn500 = create_element(icms, 'ICMSSN500')
+            create_element(icmssn500, 'orig', parts[1])
+            create_element(icmssn500, 'CSOSN', parts[2])
+            create_element(icmssn500, 'vBCSTRet', parts[3])
+            create_element(icmssn500, 'pST', parts[4])
+            create_element(icmssn500, 'vICMSSubstituto', parts[5])
+            create_element(icmssn500, 'vICMSSTRet', parts[6])
 
-        elif parts[0] == 'N10':
-            if len(parts) < 7:
-                print(f"Erro na linha {line_number}: esperados 7 campos, mas encontrados {len(parts)}")
-                continue
-            ICMS = create_element(imposto, 'ICMS')
-            ICMSSN500 = create_element(ICMS, 'ICMSSN500')
-            create_element(ICMSSN500, 'orig', parts[1])
-            create_element(ICMSSN500, 'CSOSN', parts[2])
-            create_element(ICMSSN500, 'vBCSTRet', parts[3])
-            create_element(ICMSSN500, 'pST', parts[4])
-            create_element(ICMSSN500, 'vICMSSubstituto', parts[5])
-            create_element(ICMSSN500, 'vICMSSTRet', parts[6])
+        # elif parts[0] == 'N10':
+        #     if len(parts) < 7:
+        #         print(f"Erro na linha {line_number}: esperados 7 campos, mas encontrados {len(parts)}")
+        #         continue
+        #     ICMS = create_element(imposto, 'ICMS')
+        #     ICMSSN500 = create_element(ICMS, 'ICMSSN500')
+        #     create_element(ICMSSN500, 'orig', parts[1])
+        #     create_element(ICMSSN500, 'CSOSN', parts[2])
+        #     create_element(ICMSSN500, 'vBCSTRet', parts[3])
+        #     create_element(ICMSSN500, 'pST', parts[4])
+        #     create_element(ICMSSN500, 'vICMSSubstituto', parts[5])
+        #     create_element(ICMSSN500, 'vICMSSTRet', parts[6])
 
-        elif parts[0] == 'N11':
-            if len(parts) < 2:
-                print(f"Erro na linha {line_number}: esperados 2 campos, mas encontrados {len(parts)}")
-                continue
+        elif parts[0] == 'Q04':
+            # if len(parts) < 2:
+            #     print(f"Erro na linha {line_number}: esperados 2 campos, mas encontrados {len(parts)}")
+            #     continue
             PIS = create_element(imposto, 'PIS')
             PISNT = create_element(PIS, 'PISNT')
             create_element(PISNT, 'CST', parts[1])
 
-        elif parts[0] == 'N12':
-            if len(parts) < 2:
-                print(f"Erro na linha {line_number}: esperados 2 campos, mas encontrados {len(parts)}")
-                continue
+        elif parts[0] == 'S04':
+            # if len(parts) < 2:
+            #     print(f"Erro na linha {line_number}: esperados 2 campos, mas encontrados {len(parts)}")
+            #     continue
             COFINS = create_element(imposto, 'COFINS')
             COFINSNT = create_element(COFINS, 'COFINSNT')
             create_element(COFINSNT, 'CST', parts[1])
 
-        elif parts[0] == 'W':
-            if len(parts) < 16:
-                print(f"Erro na linha {line_number}: esperados 16 campos, mas encontrados {len(parts)}")
-                continue
+        elif parts[0] == 'W02':
+            # if len(parts) < 16:
+            #     print(f"Erro na linha {line_number}: esperados 16 campos, mas encontrados {len(parts)}")
+            #     continue
+            parts1 = parts
+            continue
+        elif parts[0] == 'W04c':
+            parts2 = parts
+            continue
+        elif parts[0] == 'W04e':
+            parts3 = parts
+        elif parts[0] == 'W04g':
+            parts4 = parts
             total = create_element(infNFe, 'total')
             ICMSTot = create_element(total, 'ICMSTot')
-            create_element(ICMSTot, 'vBC', parts[1])
-            create_element(ICMSTot, 'vICMS', parts[2])
-            create_element(ICMSTot, 'vICMSDeson', parts[3])
-            create_element(ICMSTot, 'vBCST', parts[4])
-            create_element(ICMSTot, 'vST', parts[5])
-            create_element(ICMSTot, 'vProd', parts[6])
-            create_element(ICMSTot, 'vFrete', parts[7])
-            create_element(ICMSTot, 'vSeg', parts[8])
-            create_element(ICMSTot, 'vDesc', parts[9])
-            create_element(ICMSTot, 'vII', parts[10])
-            create_element(ICMSTot, 'vIPI', parts[11])
-            create_element(ICMSTot, 'vPIS', parts[12])
-            create_element(ICMSTot, 'vCOFINS', parts[13])
-            create_element(ICMSTot, 'vOutro', parts[14])
-            create_element(ICMSTot, 'vNF', parts[15])
+            create_element(ICMSTot, 'vBC', parts1[1])
+            create_element(ICMSTot, 'vICMS', parts1[2])
+            create_element(ICMSTot, 'vICMSDeson', parts1[3])
+            create_element(ICMSTot, 'vFCPUFDest', parts2[1])
+            create_element(ICMSTot, 'vICMSUFDest', parts3[1])
+            create_element(ICMSTot, 'vICMSUFRemet', parts4[1])
+            create_element(ICMSTot, 'vFCP', parts1[4])
+            create_element(ICMSTot, 'vBCST', parts1[5])
+            create_element(ICMSTot, 'vST', parts1[6])
+            create_element(ICMSTot, 'vFCPST', parts1[7])
+            create_element(ICMSTot, 'vFCPSTRet', parts1[8])
+            create_element(ICMSTot, 'qBCMono', parts1[9])
+            create_element(ICMSTot, 'vICMSMono', parts1[10])
+            create_element(ICMSTot, 'qBCMonoReten', parts1[11])
+            create_element(ICMSTot, 'vICMSMonoReten', parts1[12])
+            create_element(ICMSTot, 'qBCMonoRet', parts1[13])
+            create_element(ICMSTot, 'vICMSMonoRet', parts1[14])
+            create_element(ICMSTot, 'vProd', parts1[15])
+            create_element(ICMSTot, 'vFrete', parts1[16])
+            create_element(ICMSTot, 'vSeg', parts1[17])
+            create_element(ICMSTot, 'vDesc', parts1[18])
+            create_element(ICMSTot, 'vII', parts1[19])
+            create_element(ICMSTot, 'vIPI', parts1[20])
+            create_element(ICMSTot, 'vIPIDevol', parts1[21])
+            create_element(ICMSTot, 'vPIS', parts1[22])
+            create_element(ICMSTot, 'vCOFINS', parts1[23])
+            create_element(ICMSTot, 'vOutro', parts1[24])
+            create_element(ICMSTot, 'vNF', parts1[25])
+            create_element(ICMSTot, 'vTotTrib', parts1[26])
 
         elif parts[0] == 'X':
-            if len(parts) < 5:
-                print(f"Erro na linha {line_number}: esperados 5 campos, mas encontrados {len(parts)}")
-                continue
+            # if len(parts) < 5:
+            #     print(f"Erro na linha {line_number}: esperados 5 campos, mas encontrados {len(parts)}")
+            #     continue
             transp = create_element(infNFe, 'transp')
             create_element(transp, 'modFrete', parts[1])
-            transporta = create_element(transp, 'transporta')
-            create_element(transporta, 'xNome', parts[2])
-            vol = create_element(transp, 'vol')
-            create_element(vol, 'qVol', parts[3])
-            create_element(vol, 'pesoL', parts[4])
-            create_element(vol, 'pesoB', parts[5])
+            # transporta = create_element(transp, 'transporta')
+            # create_element(transporta, 'xNome', parts[2])
+            # vol = create_element(transp, 'vol')
+            # create_element(vol, 'qVol', parts[3])
+            # create_element(vol, 'pesoL', parts[4])
+            # create_element(vol, 'pesoB', parts[5])
 
-        elif parts[0] == 'Y':
-            if len(parts) < 4:
-                print(f"Erro na linha {line_number}: esperados 4 campos, mas encontrados {len(parts)}")
-                continue
+        elif parts[0] == 'Y02':
+            # if len(parts) < 4:
+            #     print(f"Erro na linha {line_number}: esperados 4 campos, mas encontrados {len(parts)}")
+            #     continue
+            parts1 = parts
+            continue
+        elif parts[0] == 'Y07':
+            parts2 = parts
+            continue
+        elif parts[0] == 'YA':
+            parts3 = parts
+
             cobr = create_element(infNFe, 'cobr')
+            fat = create_element(cobr, 'fat')
+            create_element(fat, 'nFat', parts1[1])
+            create_element(fat, 'vOrig', parts1[2])
+            create_element(fat, 'vDesc', parts1[3])
+            create_element(fat, 'vLiq', parts1[4])
             dup = create_element(cobr, 'dup')
-            create_element(dup, 'nDup', parts[1])
-            create_element(dup, 'dVenc', parts[2])
-            create_element(dup, 'vDup', parts[3])
+            create_element(dup, 'nDup', parts2[1])
+            create_element(dup, 'dVenc', parts2[2])
+            create_element(dup, 'vDup', parts2[3])
+
+        elif parts[0] == 'YA01':
+            pag = create_element(infNFe, 'pag')
+            detPag = create_element(pag, 'detPag')
+            create_element(detPag, 'indPag', parts[1])
+            create_element(detPag, 'tPag', parts[2])
+            create_element(detPag, 'vPag', parts[3])
 
         elif parts[0] == 'Z':
             infAdic = create_element(infNFe, 'infAdic')
-            create_element(infAdic, 'infAdFisco')
-            create_element(infAdic, 'infCpl')
+            create_element(infAdic, 'infCpl', parts[2])
 
-    protNFe = create_element(nfeProc, 'protNFe', attrib={'versao': '4.00'})
-    infProt = create_element(protNFe, 'infProt')
-    create_element(infProt, 'tpAmb', '1')
-    create_element(infProt, 'verAplic', '6.0')
-    create_element(infProt, 'chNFe', '510500042420035722343256826829877')
-    create_element(infProt, 'dhRecbto', '2017-02-03T18:23:20-02:00')
-    create_element(infProt, 'nProt', '152170667241354')
-    create_element(infProt, 'digVal', '2qhZfVTlC2Tqz+RWdhXnbnJT0V4=')
-    create_element(infProt, 'cStat', '100')
-    create_element(infProt, 'xMotivo', 'Autorizado o uso da NF-e')
+    infRespTec = create_element(nfeProc, 'infRespTec')
+    create_element(infRespTec, 'CNPJ', '43728245000142')
+    create_element(infRespTec, 'xContato', 'suporte')
+    create_element(infRespTec, 'email', 'suporteemissores@sebraesp.com.br')
+    create_element(infRespTec, 'fone', '08005700800')
+
+    # protNFe = create_element(nfeProc, 'protNFe', attrib={'versao': '4.00'})
+    # infProt = create_element(protNFe, 'infProt')
+    # create_element(infProt, 'tpAmb', '1')
+    # create_element(infProt, 'verAplic', '6.0')
+    # create_element(infProt, 'chNFe', '510500042420035722343256826829877')
+    # create_element(infProt, 'dhRecbto', '2017-02-03T18:23:20-02:00')
+    # create_element(infProt, 'nProt', '152170667241354')
+    # create_element(infProt, 'digVal', '2qhZfVTlC2Tqz+RWdhXnbnJT0V4=')
+    # create_element(infProt, 'cStat', '100')
+    # create_element(infProt, 'xMotivo', 'Autorizado o uso da NF-e')
 
     xml_buffer = BytesIO()
     tree = ET.ElementTree(nfeProc)
