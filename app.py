@@ -32,10 +32,13 @@ st.title("Conversão de NFe - TXT para XML")
 st.markdown(
     """
     <style>
-    .css-1l02zno {
-        font-size: 0.8em;
+    .css-10trblm {
+        position: fixed;
+        top: 10px;
+        left: 10px;
     }
     </style>
+    <div class="css-10trblm">Meu texto no canto superior esquerdo</div>
     """,
     unsafe_allow_html=True
 )
@@ -64,7 +67,7 @@ st.markdown(
 st.markdown(
     """
     **Instruções:**
-    1. Selecione um arquivo .txt de NF-e.
+    1. Selecione um arquivo .txt de NF-e clicando no botão <Browse file>.
     2. Verifique o conteúdo do arquivo.
     3. Clique no botão "Converter para XML".
     4. Selecione a pasta onde irá salvar o arquivo .xml.
