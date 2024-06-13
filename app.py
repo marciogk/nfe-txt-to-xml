@@ -44,18 +44,6 @@ st.markdown(
 )
 
 
-# Número da versão da aplicação, no canto inferior direito
-st.markdown(
-    """
-    <style>
-    footer {
-        visibility: hidden;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 # Descrição da aplicação
 st.markdown(
     """
@@ -71,7 +59,7 @@ st.markdown(
     2. Verifique o conteúdo do arquivo.
     3. Clique no botão "Converter para XML".
     4. Selecione a pasta onde irá salvar o arquivo .xml.
-    5. Clique no 'X' à direita do nome do arquivo .txt para reinciar.
+    5. Clique no 'X' à direita do nome do arquivo .txt para reiniciar.
     """
 )
 
