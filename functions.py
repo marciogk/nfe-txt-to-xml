@@ -43,7 +43,7 @@ def process_txt_to_xml(txt_content):
             create_element(ide, 'cMunFG', parts[11])
             create_element(ide, 'tpImp', parts[12])
             create_element(ide, 'tpEmis', parts[13])
-            create_element(ide, 'cDV', ' ')
+            create_element(ide, 'cDV', parts[14])
             create_element(ide, 'tpAmb', parts[15])
             create_element(ide, 'finNFe', parts[16])
             create_element(ide, 'indFinal', parts[17])

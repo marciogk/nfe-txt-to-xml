@@ -65,8 +65,9 @@ st.markdown(
     """
     **Instruções:**
     1. Selecione um arquivo .txt de NF-e.
-    2. Clique no botão "Converter para XML".
-    3. Selecione a pasta onde irá salvar o arquivo .xml.
+    2. Verifique o conteúdo do arquivo.
+    3. Clique no botão "Converter para XML".
+    4. Selecione a pasta onde irá salvar o arquivo .xml.
     """
 )
 
