@@ -93,7 +93,7 @@ if uploaded_file is not None:
         st.stop()
 
     # Exibição do conteúdo do arquivo
-    st.text_area("Conteúdo do arquivo " + uploaded_file.name, file_content, height=310)
+    st.text_area("Conteúdo do arquivo " + uploaded_file.name, file_content, height=155)
 
     @st.cache_data
     def process_content(file_content):
