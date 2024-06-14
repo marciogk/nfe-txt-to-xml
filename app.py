@@ -97,6 +97,8 @@ if uploaded_file is not None:
 
     st.success("Arquivo processado com sucesso! Clique no botão abaixo para converter em .xml")
 
+    st.balloons
+
     st.download_button(
         label="Converter para XML",
         data=processed_content,
