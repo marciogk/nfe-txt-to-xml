@@ -21,8 +21,8 @@ st.markdown(
   </style>''', unsafe_allow_html=True
 )
 
-# st.header("This is a header") # adds subheader
-# st.subheader("This is a subheader") # adds a smaller subheader
+# Configurar o título da aba do navegador
+st.set_page_config(page_title="Delta Informática")
 
 # Título da aplicação
 st.title("Conversão de NFe - TXT para XML")
