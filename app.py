@@ -1,7 +1,7 @@
 import streamlit as st
 from functions import process_txt_to_xml
 
-st.set_page_config(page_title='txt to xml')
+st.set_page_config(page_title='Delta Informática', page_icon=':money_with_wings:')
 
 # Esconder o menu do Streamlit
 hide_streamlit_style = """
@@ -21,8 +21,6 @@ st.markdown(
   </style>''', unsafe_allow_html=True
 )
 
-# Configurar o título da aba do navegador
-st.set_page_config(page_title="Delta Informática")
 
 # Título da aplicação
 st.title("Conversão de NFe - TXT para XML")
