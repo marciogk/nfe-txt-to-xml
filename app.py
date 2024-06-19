@@ -81,6 +81,7 @@ if uploaded_file is not None:
 
     # Exibição do conteúdo do arquivo
     st.text_area("Conteúdo do arquivo " + uploaded_file.name, file_content, height=155)
+    # st.balloons()
 
     @st.cache_data
     def process_content(file_content):
@@ -93,10 +94,10 @@ if uploaded_file is not None:
     elif uploaded_file.name.endswith(".TXT"):
         processed_file_name = uploaded_file.name.replace(".TXT", ".xml")
 
-    st.success("Arquivo processado com sucesso! Clique no botão abaixo para converter em .xml")
+    st.info("Arquivo processado com sucesso! Clique no botão abaixo para converter em .xml")
 
-    st.balloons()
-    st.snow()
+    # st.balloons()
+    # st.snow()
 
     st.download_button(
         label="Converter para XML",
@@ -104,3 +105,6 @@ if uploaded_file is not None:
         file_name=processed_file_name,
         mime="application/xml"
     )
+
+    # color = st.color_picker("Pick A Color", "#00f900")
+    # st.write("The current color is", color)
