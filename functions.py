@@ -1,3 +1,5 @@
+import streamlit as st
+
 import xml.etree.ElementTree as ET
 from io import BytesIO
 
@@ -299,3 +301,5 @@ def process_txt_to_xml(txt_content):
 
     tree.write(xml_buffer, encoding='utf-8', xml_declaration=True)
     return xml_buffer.getvalue().decode('utf-8')
+
+    st.balloons()
