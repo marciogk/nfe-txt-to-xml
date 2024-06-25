@@ -41,21 +41,21 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Obter o IP do usuário
-ip_address = st.empty()
-ip_address.markdown(
-    """
-    <style>
-    .css-10trblm {
-        position: fixed;
-        top: 10px;
-        right: 10px;
-    }
-    </style>
-    <div class="css-10trblm">IP: {}</div>
-    """.format(st.session_state.get('ip_address', 'Unknown')),
-    unsafe_allow_html=True
-)
+# # Obter o IP do usuário
+# ip_address = st.empty()
+# ip_address.markdown(
+#     """
+#     <style>
+#     .css-10trblm {
+#         position: fixed;
+#         top: 10px;
+#         right: 10px;
+#     }
+#     </style>
+#     <div class="css-10trblm">IP: {}</div>
+#     """.format(st.session_state.get('ip_address', 'Unknown')),
+#     unsafe_allow_html=True
+# )
 
 # Descrição da aplicação
 st.markdown(
