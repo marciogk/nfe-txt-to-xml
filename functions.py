@@ -110,7 +110,7 @@ def process_txt_to_xml(txt_content):
             # chave_nfe = generate_chave_nfe(cNF, datetime.now().date(), cnpj)
             cNF = num_aleatorio()
             cDV = dv_mod11(cNF)
-            chave_nfe = 'NFe' + cUF + aamm + cnpj + modelo + serie + nNF + tpEmis + cNF + cDV
+            chave_nfe = 'NFe' + str(cUF) + str(aamm) + str(cnpj) + str(modelo) + str(serie) + str(nNF) + str(tpEmis) + str(cNF) + str(cDV)
             break
 
     ET.register_namespace('', "http://www.portalfiscal.inf.br/nfe")
