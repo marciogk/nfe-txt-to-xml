@@ -129,7 +129,7 @@ def process_txt_to_xml(txt_content):
         elif parts[0] == 'B':
             ide = create_element(infNFe, 'ide')
             create_element(ide, 'cUF', parts[1])
-            create_element(ide, 'cNF', chave_nfe[34:42])
+            create_element(ide, 'cNF', cNF)
             create_element(ide, 'natOp', parts[3])
             # create_element(ide, 'indPag', '?')
             create_element(ide, 'mod', parts[4])
@@ -143,13 +143,13 @@ def process_txt_to_xml(txt_content):
             create_element(ide, 'cMunFG', parts[11])
             create_element(ide, 'tpImp', parts[12])
             create_element(ide, 'tpEmis', parts[13])
-            create_element(ide, 'cDV', parts[14])
+            create_element(ide, 'cDV', cDV)
             create_element(ide, 'tpAmb', parts[15])
             create_element(ide, 'finNFe', parts[16])
             create_element(ide, 'indFinal', parts[17])
             create_element(ide, 'indPres', parts[18])
             create_element(ide, 'procEmi', '3')
-            create_element(ide, 'verProc', '4.01_sebrae_b039')
+            create_element(ide, 'verProc', '4.01_sebrae_b045')
 
         elif parts[0] == 'C':
             parts1 = parts
@@ -187,17 +187,20 @@ def process_txt_to_xml(txt_content):
         elif parts[0] == 'E':
             parts1 = parts
             continue
-        elif parts[0] == 'E02':
+        elif parts[0] == 'E02' or parts[0] == 'E03':
             parts2 = parts
             continue
         elif parts[0] == 'E05':
             parts3 = parts
             dest = create_element(infNFe, 'dest')
-            create_element(dest, 'CNPJ', parts2[1])
+            if len(parts2[1]) > 11:
+                create_element(dest, 'CNPJ', parts2[1])
+            else:
+                create_element(dest, 'CPF', parts2[1])
             create_element(dest, 'xNome', parts1[1])
             enderDest = create_element(dest, 'enderDest')
             create_element(enderDest, 'xLgr', parts3[1])
-            create_element(enderDest, 'nro', parts3[2])
+            create_element(enderDest, 'nro', parts3[2].strip())
             if len(parts3[3]) > 0:
                 create_element(enderDest, 'xCpl', parts3[3])
             create_element(enderDest, 'xBairro', parts3[4])
@@ -210,7 +213,8 @@ def process_txt_to_xml(txt_content):
             if len(parts3[11]) > 0:
                 create_element(enderDest, 'fone', parts3[11])
             create_element(dest, 'indIEDest', parts1[2])
-            create_element(dest, 'IE', parts1[3])
+            if len(parts2[1]) > 11:
+                create_element(dest, 'IE', parts1[3])
 
         elif parts[0] == 'H':
             det = create_element(infNFe, 'det', attrib={'nItem': str(det_counter)})
@@ -268,25 +272,16 @@ def process_txt_to_xml(txt_content):
         #     create_element(ICMSSN500, 'vICMSSTRet', parts[6])
 
         elif parts[0] == 'Q04':
-            # if len(parts) < 2:
-            #     print(f"Erro na linha {line_number}: esperados 2 campos, mas encontrados {len(parts)}")
-            #     continue
             PIS = create_element(imposto, 'PIS')
             PISNT = create_element(PIS, 'PISNT')
             create_element(PISNT, 'CST', parts[1])
 
         elif parts[0] == 'S04':
-            # if len(parts) < 2:
-            #     print(f"Erro na linha {line_number}: esperados 2 campos, mas encontrados {len(parts)}")
-            #     continue
             COFINS = create_element(imposto, 'COFINS')
             COFINSNT = create_element(COFINS, 'COFINSNT')
             create_element(COFINSNT, 'CST', parts[1])
 
         elif parts[0] == 'W02':
-            # if len(parts) < 16:
-            #     print(f"Erro na linha {line_number}: esperados 16 campos, mas encontrados {len(parts)}")
-            #     continue
             parts1 = parts
             continue
         elif parts[0] == 'W04c':
@@ -298,41 +293,37 @@ def process_txt_to_xml(txt_content):
             parts4 = parts
             total = create_element(infNFe, 'total')
             ICMSTot = create_element(total, 'ICMSTot')
-            create_element(ICMSTot, 'vBC', parts1[1])
-            create_element(ICMSTot, 'vICMS', parts1[2])
-            create_element(ICMSTot, 'vICMSDeson', parts1[3])
-            create_element(ICMSTot, 'vFCPUFDest', parts2[1])
-            create_element(ICMSTot, 'vICMSUFDest', parts3[1])
-            create_element(ICMSTot, 'vICMSUFRemet', parts4[1])
-            create_element(ICMSTot, 'vFCP', parts1[4])
-            create_element(ICMSTot, 'vBCST', parts1[5])
-            create_element(ICMSTot, 'vST', parts1[6])
-            create_element(ICMSTot, 'vFCPST', parts1[7])
-            create_element(ICMSTot, 'vFCPSTRet', parts1[8])
-            create_element(ICMSTot, 'qBCMono', parts1[9])
-            create_element(ICMSTot, 'vICMSMono', parts1[10])
-            create_element(ICMSTot, 'qBCMonoReten', parts1[11])
-            create_element(ICMSTot, 'vICMSMonoReten', parts1[12])
-            create_element(ICMSTot, 'qBCMonoRet', parts1[13])
-            create_element(ICMSTot, 'vICMSMonoRet', parts1[14])
-            if len(parts1) > 15:
-                create_element(ICMSTot, 'vProd', parts1[15])
-                create_element(ICMSTot, 'vFrete', parts1[16])
-                create_element(ICMSTot, 'vSeg', parts1[17])
-                create_element(ICMSTot, 'vDesc', parts1[18])
-                create_element(ICMSTot, 'vII', parts1[19])
-                create_element(ICMSTot, 'vIPI', parts1[20])
-                create_element(ICMSTot, 'vIPIDevol', parts1[21])
-                create_element(ICMSTot, 'vPIS', parts1[22])
-                create_element(ICMSTot, 'vCOFINS', parts1[23])
-                create_element(ICMSTot, 'vOutro', parts1[24])
-                create_element(ICMSTot, 'vNF', parts1[25])
-                create_element(ICMSTot, 'vTotTrib', parts1[26])
-
         elif parts[0] == 'X':
-            # if len(parts) < 5:
-            #     print(f"Erro na linha {line_number}: esperados 5 campos, mas encontrados {len(parts)}")
-            #     continue
+            create_element(ICMSTot, 'vBC', parts1.get('1', 0))
+            create_element(ICMSTot, 'vICMS', parts1.get('2', 0))
+            create_element(ICMSTot, 'vICMSDeson', parts1.get('3', 0))
+            create_element(ICMSTot, 'vFCPUFDest', parts2.get('1', 0))
+            create_element(ICMSTot, 'vICMSUFDest', parts3.get('1', 0))
+            create_element(ICMSTot, 'vICMSUFRemet', parts4.get('1', 0))
+            create_element(ICMSTot, 'vFCP', parts1.get('4', 0))
+            create_element(ICMSTot, 'vBCST', parts1.get('5', 0))
+            create_element(ICMSTot, 'vST', parts1.get('6', 0))
+            create_element(ICMSTot, 'vFCPST', parts1.get('7', 0))
+            create_element(ICMSTot, 'vFCPSTRet', parts1.get('8', 0))
+            create_element(ICMSTot, 'qBCMono', parts1.get('9', 0))
+            create_element(ICMSTot, 'vICMSMono', parts1.get('10', 0))
+            create_element(ICMSTot, 'qBCMonoReten', parts1.get('11', 0))
+            create_element(ICMSTot, 'vICMSMonoReten', parts1.get('12', 0))
+            create_element(ICMSTot, 'qBCMonoRet', parts1.get('13', 0))
+            create_element(ICMSTot, 'vICMSMonoRet', parts1.get('14', 0))
+            create_element(ICMSTot, 'vProd', parts1.get('15', 0))
+            create_element(ICMSTot, 'vFrete', parts1.get('16', 0))
+            create_element(ICMSTot, 'vSeg', parts1.get('17', 0))
+            create_element(ICMSTot, 'vDesc', parts1.get('18', 0))
+            create_element(ICMSTot, 'vII', parts1.get('19', 0))
+            create_element(ICMSTot, 'vIPI', parts1.get('20', 0))
+            create_element(ICMSTot, 'vIPIDevol', parts1.get('21', 0))
+            create_element(ICMSTot, 'vPIS', parts1.get('22', 0))
+            create_element(ICMSTot, 'vCOFINS', parts1.get('23', 0))
+            create_element(ICMSTot, 'vOutro', parts1.get('24', 0))
+            create_element(ICMSTot, 'vNF', parts1.get('25', 0))
+            create_element(ICMSTot, 'vTotTrib', parts1.get('26', 0))
+
             transp = create_element(infNFe, 'transp')
             create_element(transp, 'modFrete', parts[1])
             # transporta = create_element(transp, 'transporta')
