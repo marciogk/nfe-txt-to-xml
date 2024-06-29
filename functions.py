@@ -291,9 +291,10 @@ def process_txt_to_xml(txt_content):
             parts3 = parts
         elif parts[0] == 'W04g':
             parts4 = parts
+
+        elif parts[0] == 'X':
             total = create_element(infNFe, 'total')
             ICMSTot = create_element(total, 'ICMSTot')
-        elif parts[0] == 'X':
             create_element(ICMSTot, 'vBC', parts1.get('1', 0))
             create_element(ICMSTot, 'vICMS', parts1.get('2', 0))
             create_element(ICMSTot, 'vICMSDeson', parts1.get('3', 0))
