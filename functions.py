@@ -1,7 +1,83 @@
 import streamlit as st
+import random
+from datetime import datetime
 
 import xml.etree.ElementTree as ET
 from io import BytesIO
+
+
+def num_aleatorio():
+    """Generates a random string of 15 characters.
+
+    Returns:
+      str: A random string of 15 characters.
+  """
+    f = ""
+    for i in range(1, 16):
+        # Use random.uniform to generate a random float between 0 and 1
+        x = random.uniform(0, 1) * 3.72158 * i
+        # Use string formatting to get the last character of x
+        x = str(x)[-1]
+        f += x
+    return f
+
+
+def dv_mod11(v_nr):
+    """Calculates the DV (verification digit) using the Mod11 algorithm.
+
+  Args:
+      v_nr (str): The number to calculate the DV for.
+
+  Returns:
+      int: The calculated DV (verification digit).
+  """
+    v_soma = 0
+    v_mult = 2
+
+    for i in range(len(v_nr) - 1, -1, -1):
+        # Convert character to integer and handle potential errors
+        try:
+            digit = int(v_nr[i])
+        except ValueError:
+            raise ValueError("Invalid character in input string")
+
+        v_soma += digit * v_mult
+        v_mult = (v_mult + 1) % 10  # Efficiently wrap v_mult around 2-9
+
+    dv = v_soma % 11
+    return 0 if dv in (0, 1) else 11 - dv
+
+
+def generate_chave_nfe(pedido, data, cliente):
+    """Generates a NFe key string with DV (verification digit).
+
+  Args:
+      pedido (str): The order number (assumed to be a string).
+      data (datetime.date): The order date.
+      cliente (str): The customer ID.
+
+  Returns:
+      str: The complete NFe key string with DV.
+  """
+    # Generate random string
+    random_string = num_aleatorio()
+
+    # Format date and order number
+    formatted_date = data.strftime("%y%d%m")
+    formatted_pedido = pedido.zfill(4)
+
+    # Construct the base key string
+    base_chave = f"{datetime.now().strftime('%S%M')}{formatted_pedido}{formatted_date}{cliente}{random_string}"
+
+    # Check if the first character is 0 and adjust if needed
+    if base_chave[0] == "0":
+        base_chave = "3" + base_chave[1:]
+
+    # Calculate and append DV
+    dv = dv_mod11(base_chave)
+    chave_nfe = base_chave + str(dv)
+
+    return chave_nfe
 
 
 def create_element(parent, tag, text=None, attrib={}):
@@ -14,10 +90,33 @@ def create_element(parent, tag, text=None, attrib={}):
 def process_txt_to_xml(txt_content):
     lines = txt_content.splitlines()
 
+    for line_number, line in enumerate(lines, start=1):
+        parts = line.strip().split('|')
+
+        if parts[0] == 'B':
+            cUF = parts[1]
+            aamm = parts[7][2:4] + parts[7][0:2]
+            # cnpj = parts[2]
+            modelo = parts[4]
+            serie = parts[5]
+            nNF = parts[6]
+            tpEmis = parts[13]
+            cNF = parts[14]
+            # cDV= parts[15]     
+            data = datetime.now().date()
+            chave_nfe = generate_chave_nfe(parts[6], data, '01')
+        elif parts[0] == 'C02':
+            cnpj = parts[1]
+            # chave_nfe = generate_chave_nfe(cNF, datetime.now().date(), cnpj)
+            cNF = num_aleatorio()
+            cDV = dv_mod11(cNF)
+            chave_nfe = 'NFe' + cUF + aamm + cnpj + modelo + serie + nNF + tpEmis + cNF + cDV
+            break
+
     ET.register_namespace('', "http://www.portalfiscal.inf.br/nfe")
     nfeProc = ET.Element('nfeProc', attrib={'xmlns': "http://www.portalfiscal.inf.br/nfe", 'versao': '4.00'})
     NFe = create_element(nfeProc, 'NFe', attrib={'xmlns': "http://www.portalfiscal.inf.br/nfe"})
-    infNFe = create_element(NFe, 'infNFe', attrib={'versao': '4.00'})
+    infNFe = create_element(NFe, 'infNFe', attrib={'Id': chave_nfe, 'versao': '4.00'})
 
     det_counter = 1  # Contador para elementos <det>
 
@@ -31,7 +130,7 @@ def process_txt_to_xml(txt_content):
         elif parts[0] == 'B':
             ide = create_element(infNFe, 'ide')
             create_element(ide, 'cUF', parts[1])
-            create_element(ide, 'cNF', parts[2])
+            create_element(ide, 'cNF', chave_nfe[34:42])
             create_element(ide, 'natOp', parts[3])
             # create_element(ide, 'indPag', '?')
             create_element(ide, 'mod', parts[4])
@@ -300,6 +399,6 @@ def process_txt_to_xml(txt_content):
     # tree.write(xml_path, encoding='utf-8', xml_declaration=True)
 
     tree.write(xml_buffer, encoding='utf-8', xml_declaration=True)
+    st.balloons()
     return xml_buffer.getvalue().decode('utf-8')
 
-    st.balloons()
