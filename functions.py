@@ -1,4 +1,3 @@
-import streamlit as st
 import random
 from datetime import datetime
 
@@ -13,7 +12,7 @@ def num_aleatorio():
       str: A random string of 15 characters.
   """
     f = ""
-    for i in range(1, 16):
+    for i in range(1, 9):
         # Use random.uniform to generate a random float between 0 and 1
         x = random.uniform(0, 1) * 3.72158 * i
         # Use string formatting to get the last character of x
@@ -95,16 +94,16 @@ def process_txt_to_xml(txt_content):
 
         if parts[0] == 'B':
             cUF = parts[1]
-            aamm = parts[7][2:4] + parts[7][0:2]
+            aamm = parts[7][2:4] + parts[7][5:7]
             # cnpj = parts[2]
             modelo = parts[4]
-            serie = parts[5]
-            nNF = parts[6]
+            serie = str(parts[5]).zfill(3)
+            nNF = str(parts[6]).zfill(9)
             tpEmis = parts[13]
-            cNF = parts[14]
+            # cNF = parts[14]
             # cDV= parts[15]     
-            data = datetime.now().date()
-            chave_nfe = generate_chave_nfe(parts[6], data, '01')
+            # data = datetime.now().date()
+            # chave_nfe = generate_chave_nfe(parts[6], data, '01')
         elif parts[0] == 'C02':
             cnpj = parts[1]
             # chave_nfe = generate_chave_nfe(cNF, datetime.now().date(), cnpj)
@@ -399,6 +398,5 @@ def process_txt_to_xml(txt_content):
     # tree.write(xml_path, encoding='utf-8', xml_declaration=True)
 
     tree.write(xml_buffer, encoding='utf-8', xml_declaration=True)
-    st.balloons()
+    # st.balloons()
     return xml_buffer.getvalue().decode('utf-8')
-
