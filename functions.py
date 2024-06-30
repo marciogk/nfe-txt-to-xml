@@ -283,15 +283,17 @@ def process_txt_to_xml(txt_content):
 
         elif parts[0] == 'W02':
             parts1 = parts
-            parts4 = ''
+            # parts4 = ''
             continue
         elif parts[0] == 'W04c':
             parts2 = parts
             continue
         elif parts[0] == 'W04e':
             parts3 = parts
+            continue
         elif parts[0] == 'W04g':
-            parts4 = parts
+            # parts4 = parts
+            continue
 
         elif parts[0] == 'X':
             total = create_element(infNFe, 'total')
@@ -306,54 +308,54 @@ def process_txt_to_xml(txt_content):
             create_element(ICMSTot, 'vFCPUFDest', valor)
             valor = parts3[1] if 1 < len(parts3) and parts3[1] is not None else 0
             create_element(ICMSTot, 'vICMSUFDest', valor)
-            valor = parts4[1] if 1 < len(parts4) and parts4[1] is not None else 0
-            create_element(ICMSTot, 'vICMSUFRemet', valor)
-            valor = parts1[4] if 4 < len(parts1) and parts1[4] is not None else 0
-            create_element(ICMSTot, 'vFCP', valor)
-            valor = parts1[5] if 5 < len(parts1) and parts1[5] is not None else 0
-            create_element(ICMSTot, 'vBCST', valor)
-            valor = parts1[6] if 6 < len(parts1) and parts1[6] is not None else 0
-            create_element(ICMSTot, 'vST', valor)
-            valor = parts1[7] if 7 < len(parts1) and parts1[7] is not None else 0
-            create_element(ICMSTot, 'vFCPST', valor)
-            valor = parts1[8] if 8 < len(parts1) and parts1[8] is not None else 0
-            create_element(ICMSTot, 'vFCPSTRet', valor)
-            valor = parts1[9] if 9 < len(parts1) and parts1[9] is not None else 0
-            create_element(ICMSTot, 'qBCMono', valor)
-            valor = parts1[10] if 10 < len(parts1) and parts1[10] is not None else 0
-            create_element(ICMSTot, 'vICMSMono', valor)
-            valor = parts1[11] if 11 < len(parts1) and parts1[11] is not None else 0
-            create_element(ICMSTot, 'qBCMonoReten', valor)
-            valor = parts1[12] if 12 < len(parts1) and parts1[12] is not None else 0
-            create_element(ICMSTot, 'vICMSMonoReten', valor)
-            valor = parts1[13] if 13 < len(parts1) and parts1[13] is not None else 0
-            create_element(ICMSTot, 'qBCMonoRet', valor)
-            valor = parts1[14] if 14 < len(parts1) and parts1[14] is not None else 0
-            create_element(ICMSTot, 'vICMSMonoRet', valor)
-            valor = parts1[15] if 15 < len(parts1) and parts1[15] is not None else 0
-            create_element(ICMSTot, 'vProd', valor)
-            valor = parts1[16] if 16 < len(parts1) and parts1[16] is not None else 0
-            create_element(ICMSTot, 'vFrete', valor)
-            valor = parts1[17] if 17 < len(parts1) and parts1[17] is not None else 0
-            create_element(ICMSTot, 'vSeg', valor)
-            valor = parts1[18] if 18 < len(parts1) and parts1[18] is not None else 0
-            create_element(ICMSTot, 'vDesc', valor)
-            valor = parts1[19] if 19 < len(parts1) and parts1[19] is not None else 0
-            create_element(ICMSTot, 'vII', valor)
-            valor = parts1[20] if 20 < len(parts1) and parts1[20] is not None else 0
-            create_element(ICMSTot, 'vIPI', valor)
-            valor = parts1[21] if 21 < len(parts1) and parts1[21] is not None else 0
-            create_element(ICMSTot, 'vIPIDevol', valor)
-            valor = parts1[22] if 22 < len(parts1) and parts1[22] is not None else 0
-            create_element(ICMSTot, 'vPIS', valor)
-            valor = parts1[23] if 23 < len(parts1) and parts1[23] is not None else 0
-            create_element(ICMSTot, 'vCOFINS', valor)
-            valor = parts1[24] if 24 < len(parts1) and parts1[24] is not None else 0
-            create_element(ICMSTot, 'vOutro', valor)
-            valor = parts1[25] if 25 < len(parts1) and parts1[25] is not None else 0
-            create_element(ICMSTot, 'vNF', valor)
-            valor = parts1[26] if 26 < len(parts1) and parts1[26] is not None else 0
-            create_element(ICMSTot, 'vTotTrib', valor)
+            # valor = parts4[1] if 1 < len(parts4) and parts4[1] is not None else 0
+            # create_element(ICMSTot, 'vICMSUFRemet', valor)
+            # valor = parts1[4] if 4 < len(parts1) and parts1[4] is not None else 0
+            # create_element(ICMSTot, 'vFCP', valor)
+            # valor = parts1[5] if 5 < len(parts1) and parts1[5] is not None else 0
+            # create_element(ICMSTot, 'vBCST', valor)
+            # valor = parts1[6] if 6 < len(parts1) and parts1[6] is not None else 0
+            # create_element(ICMSTot, 'vST', valor)
+            # valor = parts1[7] if 7 < len(parts1) and parts1[7] is not None else 0
+            # create_element(ICMSTot, 'vFCPST', valor)
+            # valor = parts1[8] if 8 < len(parts1) and parts1[8] is not None else 0
+            # create_element(ICMSTot, 'vFCPSTRet', valor)
+            # valor = parts1[9] if 9 < len(parts1) and parts1[9] is not None else 0
+            # create_element(ICMSTot, 'qBCMono', valor)
+            # valor = parts1[10] if 10 < len(parts1) and parts1[10] is not None else 0
+            # create_element(ICMSTot, 'vICMSMono', valor)
+            # valor = parts1[11] if 11 < len(parts1) and parts1[11] is not None else 0
+            # create_element(ICMSTot, 'qBCMonoReten', valor)
+            # valor = parts1[12] if 12 < len(parts1) and parts1[12] is not None else 0
+            # create_element(ICMSTot, 'vICMSMonoReten', valor)
+            # valor = parts1[13] if 13 < len(parts1) and parts1[13] is not None else 0
+            # create_element(ICMSTot, 'qBCMonoRet', valor)
+            # valor = parts1[14] if 14 < len(parts1) and parts1[14] is not None else 0
+            # create_element(ICMSTot, 'vICMSMonoRet', valor)
+            # valor = parts1[15] if 15 < len(parts1) and parts1[15] is not None else 0
+            # create_element(ICMSTot, 'vProd', valor)
+            # valor = parts1[16] if 16 < len(parts1) and parts1[16] is not None else 0
+            # create_element(ICMSTot, 'vFrete', valor)
+            # valor = parts1[17] if 17 < len(parts1) and parts1[17] is not None else 0
+            # create_element(ICMSTot, 'vSeg', valor)
+            # valor = parts1[18] if 18 < len(parts1) and parts1[18] is not None else 0
+            # create_element(ICMSTot, 'vDesc', valor)
+            # valor = parts1[19] if 19 < len(parts1) and parts1[19] is not None else 0
+            # create_element(ICMSTot, 'vII', valor)
+            # valor = parts1[20] if 20 < len(parts1) and parts1[20] is not None else 0
+            # create_element(ICMSTot, 'vIPI', valor)
+            # valor = parts1[21] if 21 < len(parts1) and parts1[21] is not None else 0
+            # create_element(ICMSTot, 'vIPIDevol', valor)
+            # valor = parts1[22] if 22 < len(parts1) and parts1[22] is not None else 0
+            # create_element(ICMSTot, 'vPIS', valor)
+            # valor = parts1[23] if 23 < len(parts1) and parts1[23] is not None else 0
+            # create_element(ICMSTot, 'vCOFINS', valor)
+            # valor = parts1[24] if 24 < len(parts1) and parts1[24] is not None else 0
+            # create_element(ICMSTot, 'vOutro', valor)
+            # valor = parts1[25] if 25 < len(parts1) and parts1[25] is not None else 0
+            # create_element(ICMSTot, 'vNF', valor)
+            # valor = parts1[26] if 26 < len(parts1) and parts1[26] is not None else 0
+            # create_element(ICMSTot, 'vTotTrib', valor)
 
             transp = create_element(infNFe, 'transp')
             create_element(transp, 'modFrete', parts[1])
