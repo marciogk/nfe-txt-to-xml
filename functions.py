@@ -283,6 +283,7 @@ def process_txt_to_xml(txt_content):
 
         elif parts[0] == 'W02':
             parts1 = parts
+            parts4 = ''
             continue
         elif parts[0] == 'W04c':
             parts2 = parts
