@@ -332,30 +332,30 @@ def process_txt_to_xml(txt_content):
             create_element(ICMSTot, 'qBCMonoRet', valor)
             valor = parts1[14] if 14 < len(parts1) and parts1[14] is not None else 0
             create_element(ICMSTot, 'vICMSMonoRet', valor)
-            valor = parts1[15] if 15 < len(parts1) and parts1[15] is not None else 0
-            create_element(ICMSTot, 'vProd', valor)
-            valor = parts1[16] if 16 < len(parts1) and parts1[16] is not None else 0
-            create_element(ICMSTot, 'vFrete', valor)
-            valor = parts1[17] if 17 < len(parts1) and parts1[17] is not None else 0
-            create_element(ICMSTot, 'vSeg', valor)
-            valor = parts1[18] if 18 < len(parts1) and parts1[18] is not None else 0
-            create_element(ICMSTot, 'vDesc', valor)
-            valor = parts1[19] if 19 < len(parts1) and parts1[19] is not None else 0
-            create_element(ICMSTot, 'vII', valor)
-            valor = parts1[20] if 20 < len(parts1) and parts1[20] is not None else 0
-            create_element(ICMSTot, 'vIPI', valor)
-            valor = parts1[21] if 21 < len(parts1) and parts1[21] is not None else 0
-            create_element(ICMSTot, 'vIPIDevol', valor)
-            valor = parts1[22] if 22 < len(parts1) and parts1[22] is not None else 0
-            create_element(ICMSTot, 'vPIS', valor)
-            valor = parts1[23] if 23 < len(parts1) and parts1[23] is not None else 0
-            create_element(ICMSTot, 'vCOFINS', valor)
-            valor = parts1[24] if 24 < len(parts1) and parts1[24] is not None else 0
-            create_element(ICMSTot, 'vOutro', valor)
-            valor = parts1[25] if 25 < len(parts1) and parts1[25] is not None else 0
-            create_element(ICMSTot, 'vNF', valor)
-            valor = parts1[26] if 26 < len(parts1) and parts1[26] is not None else 0
-            create_element(ICMSTot, 'vTotTrib', valor)
+            # valor = parts1[15] if 15 < len(parts1) and parts1[15] is not None else 0
+            # create_element(ICMSTot, 'vProd', valor)
+            # valor = parts1[16] if 16 < len(parts1) and parts1[16] is not None else 0
+            # create_element(ICMSTot, 'vFrete', valor)
+            # valor = parts1[17] if 17 < len(parts1) and parts1[17] is not None else 0
+            # create_element(ICMSTot, 'vSeg', valor)
+            # valor = parts1[18] if 18 < len(parts1) and parts1[18] is not None else 0
+            # create_element(ICMSTot, 'vDesc', valor)
+            # valor = parts1[19] if 19 < len(parts1) and parts1[19] is not None else 0
+            # create_element(ICMSTot, 'vII', valor)
+            # valor = parts1[20] if 20 < len(parts1) and parts1[20] is not None else 0
+            # create_element(ICMSTot, 'vIPI', valor)
+            # valor = parts1[21] if 21 < len(parts1) and parts1[21] is not None else 0
+            # create_element(ICMSTot, 'vIPIDevol', valor)
+            # valor = parts1[22] if 22 < len(parts1) and parts1[22] is not None else 0
+            # create_element(ICMSTot, 'vPIS', valor)
+            # valor = parts1[23] if 23 < len(parts1) and parts1[23] is not None else 0
+            # create_element(ICMSTot, 'vCOFINS', valor)
+            # valor = parts1[24] if 24 < len(parts1) and parts1[24] is not None else 0
+            # create_element(ICMSTot, 'vOutro', valor)
+            # valor = parts1[25] if 25 < len(parts1) and parts1[25] is not None else 0
+            # create_element(ICMSTot, 'vNF', valor)
+            # valor = parts1[26] if 26 < len(parts1) and parts1[26] is not None else 0
+            # create_element(ICMSTot, 'vTotTrib', valor)
 
             transp = create_element(infNFe, 'transp')
             create_element(transp, 'modFrete', parts[1])
@@ -367,9 +367,6 @@ def process_txt_to_xml(txt_content):
             # create_element(vol, 'pesoB', parts[5])
 
         elif parts[0] == 'Y02':
-            # if len(parts) < 4:
-            #     print(f"Erro na linha {line_number}: esperados 4 campos, mas encontrados {len(parts)}")
-            #     continue
             parts1 = parts
             continue
         elif parts[0] == 'Y07':
