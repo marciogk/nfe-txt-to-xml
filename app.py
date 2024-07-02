@@ -1,4 +1,6 @@
 import streamlit as st
+import chardet
+
 from functions import process_txt_to_xml
 
 st.set_page_config(page_title='Delta Informática', page_icon=':money_with_wings:')
@@ -36,7 +38,7 @@ st.markdown(
         left: 10px;
     }
     </style>
-    <div class="css-10trblm">Versão 1.01</div>
+    <div class="css-10trblm">Versão 1.02</div>
     """,
     unsafe_allow_html=True
 )
@@ -81,8 +83,14 @@ uploaded_file = st.file_uploader("Selecione o arquivo .TXT", type="txt")
 
 
 if uploaded_file is not None:
+    # Tentar detectar a codificação automaticamente
+    raw_data = uploaded_file.read()
+    result = chardet.detect(raw_data)
+    encoding = result['encoding']
+
     # Leitura do conteúdo do arquivo
-    file_content = uploaded_file.read().decode("utf-8")
+    # file_content = uploaded_file.read().decode("utf-8")
+    file_content = raw_data.decode(encoding)
 
     # se o usuário não selecionar um arquivo .txt
     if not uploaded_file.name.endswith(".txt") and not uploaded_file.name.endswith(".TXT"):
@@ -96,7 +104,6 @@ if uploaded_file is not None:
 
     # Exibição do conteúdo do arquivo
     st.text_area("Conteúdo do arquivo " + uploaded_file.name, file_content, height=155)
-    # st.balloons()
 
     @st.cache_data
     def process_content(file_content):
@@ -111,15 +118,9 @@ if uploaded_file is not None:
 
     st.info("Arquivo processado com sucesso! Clique no botão abaixo para converter em .xml")
 
-    # st.balloons()
-    # st.snow()
-
     st.download_button(
         label="Converter para XML",
         data=processed_content,
         file_name=processed_file_name,
         mime="application/xml"
     )
-
-    # color = st.color_picker("Pick A Color", "#00f900")
-    # st.write("The current color is", color)
