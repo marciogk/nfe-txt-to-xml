@@ -38,7 +38,7 @@ st.markdown(
         left: 10px;
     }
     </style>
-    <div class="css-10trblm">Versão 1.02</div>
+    <div class="css-10trblm">Versão 1.03</div>
     """,
     unsafe_allow_html=True
 )

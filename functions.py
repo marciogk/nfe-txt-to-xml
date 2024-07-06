@@ -246,6 +246,24 @@ def process_txt_to_xml(txt_content):
             create_element(prod, 'vUnTrib', parts[16])
             create_element(prod, 'indTot', parts[21])
 
+        elif parts[0] == 'M':
+            imposto = create_element(det, 'imposto')
+            create_element(imposto, 'vTotTrib', parts[1])
+
+        elif parts[0] == 'N10c':
+            icms = create_element(imposto, 'ICMS')
+            icmssn101 = create_element(icms, 'ICMSSN101')
+            create_element(icmssn101, 'orig', parts[1])
+            create_element(icmssn101, 'CSOSN', parts[2])
+            create_element(icmssn101, 'pCredSN', parts[3])
+            create_element(icmssn101, 'vCredICMSSN', parts[4])
+
+        elif parts[0] == 'N10d':
+            icms = create_element(imposto, 'ICMS')
+            icmssn102 = create_element(icms, 'ICMSSN102')
+            create_element(icmssn102, 'orig', parts[1])
+            create_element(icmssn102, 'CSOSN', parts[2])
+
         elif parts[0] == 'N10g':
             imposto = create_element(det, 'imposto')
             icms = create_element(imposto, 'ICMS')
@@ -270,6 +288,56 @@ def process_txt_to_xml(txt_content):
         #     create_element(ICMSSN500, 'pST', parts[4])
         #     create_element(ICMSSN500, 'vICMSSubstituto', parts[5])
         #     create_element(ICMSSN500, 'vICMSSTRet', parts[6])
+
+        elif parts[0] == 'O':
+            IPI = create_element(imposto, 'IPI')
+            if len(parts[1]) > 0:
+                create_element(IPI, 'CNPJProd', parts[1])
+            if len(parts[2]) > 0:
+                create_element(IPI, 'cSelo', parts[2])
+            if len(parts[3]) > 0:
+                create_element(IPI, 'qSelo', parts[3])
+            if len(parts[4]) > 0:
+                create_element(IPI, 'cEnq', parts[4])
+            if len(parts[5]) > 0:
+                create_element(IPI, 'cEnq', parts[5])
+        elif parts[0] == 'O07':
+            IPITrib = create_element(IPI, 'IPITrib')
+            if len(parts[1]) > 0:
+                create_element(IPITrib, 'CST', parts[1])
+            if len(parts[2]) > 0:
+                create_element(IPITrib, 'vIPI', parts[2])
+        elif parts[0] == 'O11':
+            if len(parts[1]) > 0:
+                create_element(IPITrib, 'qUnid', parts[1])
+            if len(parts[2]) > 0:
+                create_element(IPITrib, 'vUnid', parts[2])
+
+        elif parts[0] == 'Q05':
+            PIS = create_element(imposto, 'PIS')
+            PISOutr = create_element(PIS, 'PISOutr')
+            if len(parts[1]) > 0:
+                create_element(PISOutr, 'CST', parts[1])
+            if len(parts[2]) > 0:
+                create_element(PISOutr, 'vPIS', parts[2])
+        elif parts[0] == 'Q10':
+            if len(parts[1]) > 0:
+                create_element(PISOutr, 'qBCProd', parts[1])
+            if len(parts[2]) > 0:
+                create_element(PISOutr, 'vAliqProd', parts[2])
+
+        elif parts[0] == 'S05':
+            COFINS = create_element(imposto, 'COFINS')
+            COFINSOutr = create_element(COFINS, 'COFINSOutr')
+            if len(parts[1]) > 0:
+                create_element(COFINSOutr, 'CST', parts[1])
+            if len(parts[2]) > 0:
+                create_element(COFINSOutr, 'vCOFINS', parts[2])
+        elif parts[0] == 'S09':
+            if len(parts[1]) > 0:
+                create_element(COFINSOutr, 'qBCProd', parts[1])
+            if len(parts[2]) > 0:
+                create_element(COFINSOutr, 'vAliqProd', parts[2])
 
         elif parts[0] == 'Q04':
             PIS = create_element(imposto, 'PIS')
