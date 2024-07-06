@@ -276,19 +276,6 @@ def process_txt_to_xml(txt_content):
             if len(parts) >= 7:
                 create_element(icmssn500, 'vICMSSTRet', parts[6])
 
-        # elif parts[0] == 'N10':
-        #     if len(parts) < 7:
-        #         print(f"Erro na linha {line_number}: esperados 7 campos, mas encontrados {len(parts)}")
-        #         continue
-        #     ICMS = create_element(imposto, 'ICMS')
-        #     ICMSSN500 = create_element(ICMS, 'ICMSSN500')
-        #     create_element(ICMSSN500, 'orig', parts[1])
-        #     create_element(ICMSSN500, 'CSOSN', parts[2])
-        #     create_element(ICMSSN500, 'vBCSTRet', parts[3])
-        #     create_element(ICMSSN500, 'pST', parts[4])
-        #     create_element(ICMSSN500, 'vICMSSubstituto', parts[5])
-        #     create_element(ICMSSN500, 'vICMSSTRet', parts[6])
-
         elif parts[0] == 'O':
             IPI = create_element(imposto, 'IPI')
             if len(parts[1]) > 0:
