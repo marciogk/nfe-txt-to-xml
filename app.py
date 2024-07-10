@@ -38,26 +38,11 @@ st.markdown(
         left: 10px;
     }
     </style>
-    <div class="css-10trblm">Versão 1.03</div>
+    <div class="css-10trblm">Versão 1.04</div>
     """,
     unsafe_allow_html=True
 )
 
-# # Obter o IP do usuário
-# ip_address = st.empty()
-# ip_address.markdown(
-#     """
-#     <style>
-#     .css-10trblm {
-#         position: fixed;
-#         top: 10px;
-#         right: 10px;
-#     }
-#     </style>
-#     <div class="css-10trblm">IP: {}</div>
-#     """.format(st.session_state.get('ip_address', 'Unknown')),
-#     unsafe_allow_html=True
-# )
 
 # Descrição da aplicação
 st.markdown(
@@ -103,7 +88,7 @@ if uploaded_file is not None:
         st.stop()
 
     # Exibição do conteúdo do arquivo
-    st.text_area("Conteúdo do arquivo " + uploaded_file.name, file_content, height=155)
+    # st.text_area("Conteúdo do arquivo " + uploaded_file.name, file_content, height=155)
 
     @st.cache_data
     def process_content(file_content):
@@ -116,6 +101,9 @@ if uploaded_file is not None:
     elif uploaded_file.name.endswith(".TXT"):
         processed_file_name = uploaded_file.name.replace(".TXT", ".xml")
 
+    # Exibição do conteúdo do arquivo
+    st.text_area("Conteúdo do arquivo " + uploaded_file.name, file_content, height=155)
+    
     st.info("Arquivo processado com sucesso! Clique no botão abaixo para converter em .xml")
 
     st.download_button(

@@ -1,8 +1,16 @@
+import streamlit as st
 import random
 from datetime import datetime
 
 import xml.etree.ElementTree as ET
 from io import BytesIO
+
+
+def cnpj_autorizado(cnpj):
+    if cnpj in ('43728245000142', '14176099000191', '43728245000304'):
+        return True
+    else:
+        return False
 
 
 def num_aleatorio():
@@ -157,6 +165,9 @@ def process_txt_to_xml(txt_content):
 
         elif parts[0] == 'C02':
             parts2 = parts
+            if not cnpj_autorizado(parts2[1]):
+                st.error("Acesso não autorizado")
+                st.stop()
             continue
 
         elif parts[0] == 'C05':
