@@ -7,7 +7,7 @@ from io import BytesIO
 
 
 def cnpj_autorizado(cnpj):
-    if cnpj in ('43728245000142', '14176099000191', '43728245000304'):
+    if cnpj in ('66725896000184', '14176099000191'):
         return True
     else:
         return False
